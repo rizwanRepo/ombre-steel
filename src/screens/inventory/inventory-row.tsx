@@ -3,18 +3,17 @@ import { View, Text } from 'react-native';
 
 import RowStyles from './row-styles';
 
-interface InventoryRowProps {
-    item: string;
+interface IProps {
+    itemName: string;
     quantity: string;
+    unit: string;
 }
 
-const InventoryRow = ({ item, quantity }: InventoryRowProps) => {
-    return (
-        <View style={RowStyles.container}>
-            <Text style={RowStyles.item}>{item}</Text>
-            <Text style={RowStyles.quantity}>{quantity}</Text>
-        </View>
-    );
-};
+const InventoryRow = ({ itemName, quantity, unit }: IProps) => (
+    <View style={RowStyles.container}>
+        <Text style={RowStyles.itemName}>{itemName}</Text>
+        <Text style={RowStyles.quantity}>{quantity} {unit}</Text>
+    </View>
+);
 
 export default InventoryRow;

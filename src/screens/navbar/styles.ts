@@ -9,8 +9,10 @@ const styles = StyleSheet.create({
     },
     title: {
         color: '#000',
-        fontSize: 26,
+        fontSize: 20,
         fontWeight: 'bold',
+        width: "60%",
+        textAlign: "justify"
     },
     menuButton: {
         padding: 8,
@@ -58,6 +60,13 @@ const styles = StyleSheet.create({
     selectedMenuItemText: {
         color: '#333',
         fontWeight: "bold",
+    },
+    backButton: {
+        // position: 'absolute',
+        // top: 10,
+        left: 6,
+        // padding: 10,
+        zIndex: 1,
     },
 });
 

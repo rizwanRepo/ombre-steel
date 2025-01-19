@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     View,
     Text,
@@ -11,12 +11,14 @@ import {
 } from "react-native";
 import { useMutation } from "@tanstack/react-query";
 import Icon from "react-native-vector-icons/FontAwesome";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import styles from "./styles";
 import { useUser } from "../../context/user-context";
 import { validateEmail } from "../../utils/validation";
 import { LoginPayload, LoginService } from "../../services/login-service";
 import CustomButton from "../../components/custom-button/custom-button";
+import LoadingIndicator from "../../components/loading-indicator/loading-indicator";
 
 interface IProps {
     navigation: {
@@ -26,25 +28,28 @@ interface IProps {
 }
 
 const LoginScreen = ({ navigation }: IProps) => {
+    const { setUser } = useUser();
+    const loginService = new LoginService();
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [isEmailValid, setIsEmailValid] = useState(true);
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const { setUser } = useUser();
-    const loginService = new LoginService();
 
     const { mutate: onSave, isPending } = useMutation({
         mutationFn: (data: LoginPayload) => loginService.create(data),
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
             setErrorMessage(null);
             setUser({
                 emailOrPhone: username,
                 userId: data.data.id,
                 name: data.data.name,
                 oldPassword: password,
+                partyId: data.data.partyId,
                 token: data.access_token,
             });
+            await AsyncStorage.setItem("access_token", data.access_token);
             if (!data.data.isPasswordChanged) {
                 navigation.navigate("change-password");
             } else {
@@ -53,6 +58,34 @@ const LoginScreen = ({ navigation }: IProps) => {
         },
         onError: () => setErrorMessage("Username or password is incorrect. Please try again."),
     });
+
+
+    const { mutate: authToken, isPending: isLoading } = useMutation({
+        mutationFn: (token: string) => loginService.validateToken(token),
+        onSuccess: async (data) => {
+            setErrorMessage(null);
+            setUser({
+                emailOrPhone: data.email,
+                userId: data.id,
+                name: data.name,
+                token: data.access_token,
+                partyId: data.partyId,
+            });
+            navigation.replace("/");
+        },
+        onError: async () => await AsyncStorage.removeItem("access_token"),
+    });
+
+    useEffect(() => {
+        const checkAuthToken = async () => {
+            const token = await AsyncStorage.getItem("access_token");
+            if (token) {
+                await authToken(token);
+            }
+        };
+
+        checkAuthToken();
+    }, []);
 
     const handleLogin = async () => {
         const loginData = { emailOrPhone: username, password };
@@ -66,6 +99,10 @@ const LoginScreen = ({ navigation }: IProps) => {
     };
 
     const isButtonDisabled = !username || !password || !isEmailValid;
+
+    if (isLoading) {
+        return <LoadingIndicator />;
+    }
 
     return (
         <KeyboardAvoidingView

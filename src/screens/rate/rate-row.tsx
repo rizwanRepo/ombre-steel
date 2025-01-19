@@ -1,33 +1,41 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 import RowStyles from './row-styles';
 
 interface IProps {
     item: {
         item: string;
-        rate: string;
-        change: string;
+        price: string;
+        itemName: string;
+        amount: number;
+        percentage: number;
+        id: string;
     };
 }
 
 const RateRow = ({ item }: IProps) => {
-    const { item: itemName, rate, change } = item;
+    const navigation = useNavigation<NavigationProp<Record<string, object | undefined>>>();
 
-    const changeStyle = useMemo(() => (
-        change?.startsWith('+') ? RowStyles.changeUp : RowStyles.changeDown
-    ), [change]);
+    const handleOnPress = (id: string) => {
+        navigation.navigate('place-new-purchase-orders', { id });
+    };
+
+    const amountColor = item.amount > 0 ? "green" : "red";
 
     return (
-        <View style={RowStyles.row}>
-            <Text style={RowStyles.itemText}>{itemName}</Text>
+        <View style={RowStyles.container}>
+            <Text style={RowStyles.itemText}>{item.itemName?.toString()}</Text>
 
             <View style={RowStyles.rateContainer}>
-                <Text style={RowStyles.rate}>{rate}</Text>
-                <Text style={[RowStyles.change, changeStyle]}>{change}</Text>
+                <Text style={[RowStyles.price, { marginLeft: "30%" }]}>{`₹ ${item.price}`}</Text>
+                <Text style={{ color: amountColor, fontSize: 12, marginTop: 6 }}>
+                    {item.amount} ({item.percentage})
+                </Text>
             </View>
 
-            <TouchableOpacity style={RowStyles.button}>
+            <TouchableOpacity style={RowStyles.button} onPress={() => handleOnPress(item.id)}>
                 <Text style={RowStyles.buttonText}>Book Now</Text>
             </TouchableOpacity>
         </View>

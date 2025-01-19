@@ -12,7 +12,6 @@ import {
     TouchableOpacity,
     Modal,
     FlatList,
-    ListRenderItem
 } from 'react-native';
 
 import styles from './styles';
@@ -26,17 +25,22 @@ export interface MenuItem {
 };
 
 const Navbar = () => {
+    const { user, logout } = useUser();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigation = useNavigation<NavigationProp<Record<string, object | undefined>>>();
     const route = useRoute<RouteProp<Record<string, object | undefined>, string>>();
-    const { user } = useUser();
 
-    const handleMenuItemPress = (item: MenuItem) => {
+    const handleMenuItemPress = async (item: MenuItem) => {
         setIsMenuOpen(false);
-        navigation.navigate(item.route);
+        if (item.id === "logout") {
+            await logout();
+            navigation.navigate("login");
+        } else {
+            navigation.navigate(item.route);
+        }
     };
 
-    const renderMenuItem: ListRenderItem<MenuItem> = ({ item }) => {
+    const renderMenuItem = ({ item }: { item: MenuItem }) => {
         const isSelected = route.name === item.route;
         return (
             <TouchableOpacity
@@ -50,9 +54,29 @@ const Navbar = () => {
         );
     };
 
+    const truncateText = (text: string, maxLength: number) => {
+        if (text.length > maxLength) {
+            return `${text.slice(0, maxLength)}....`;
+        }
+        return text;
+    };
+
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{user?.name}</Text>
+            {route.name !== "/" && <TouchableOpacity
+                style={styles.backButton}
+                onPress={() => navigation.goBack()}
+            >
+                <MaterialIcons
+                    name="arrow-back"
+                    size={24}
+                    color="#000"
+                />
+            </TouchableOpacity>}
+
+            <Text style={styles.title}>
+                {truncateText(user?.name || "", 30)}
+            </Text>
 
             <TouchableOpacity
                 style={styles.menuButton}

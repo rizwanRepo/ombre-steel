@@ -3,24 +3,27 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        padding: 16,
     },
     row: {
         flexDirection: "row",
         alignItems: "center",
         marginBottom: 10,
-        paddingHorizontal: 15,
+        paddingHorizontal: 10,
         paddingVertical: 10,
         borderWidth: 1,
         borderColor: "#ccc",
         backgroundColor: "#fff",
         borderRadius: 6,
+        display: "flex",
+        justifyContent: "space-around",
     },
     removeButton: {
         padding: 0,
         justifyContent: "center",
         alignItems: "center",
         marginBottom: 5,
-        marginLeft: 5,
+        marginLeft: -8,
     },
     submitButton: {
         backgroundColor: "#007BFF",
@@ -56,26 +59,22 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontWeight: "bold",
-        fontSize: 16,
+        fontSize: 12,
         color: '#222',
     },
-
-    titleContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 8,
-        backgroundColor: '#fff',
-        marginBottom: 20,
-        borderRadius: 4,
+    input: {
         borderWidth: 1,
-        borderColor: '#ddd',
+        borderColor: "#ccc",
+        borderRadius: 5,
+        paddingHorizontal: 6,
+        fontSize: 12,
+        width: "100%",
+        backgroundColor: "#fff",
     },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#222222',
-        marginLeft: 8,
+    errorText: {
+        color: 'red',
+        fontSize: 12,
+        marginTop: 4,
     },
 });
 

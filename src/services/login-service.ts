@@ -11,12 +11,22 @@ export class LoginService {
     private baseUrl: string;
 
     constructor() {
-        this.baseUrl = `${BASE_URL}/auth/login`;
+        this.baseUrl = `${BASE_URL}/auth`;
+    }
+
+    validateToken(token: string) {
+        return axios
+            .post(`${this.baseUrl}/validate-token`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => response.data.data);
     }
 
     create(login: LoginPayload) {
         return axios
-            .post(this.baseUrl, login)
+            .post(`${this.baseUrl}/login`, login)
             .then((response) => response.data);
     }
 

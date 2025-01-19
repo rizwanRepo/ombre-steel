@@ -1,58 +1,78 @@
-import React from 'react';
-import Icon from "react-native-vector-icons/MaterialIcons";
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
 import {
     View,
     Text,
     FlatList,
     KeyboardAvoidingView,
     Platform,
-    ImageBackground,
-} from 'react-native';
+    RefreshControl,
+} from "react-native";
 
-import TableStyles from './table-styles';
-import InventoryRow from './inventory-row';
-import { INVENTORY_DATA } from '../../constants';
+import TableStyles from "./table-styles";
+import InventoryRow from "./inventory-row";
+import Header from "../../components/header/header";
+import { useRefresh } from "../../hooks/useRefresh";
+import { InventoryService } from "../../services/inventory-service";
+import LoadingIndicator from "../../components/loading-indicator/loading-indicator";
+import EmptyListMessage from "../../components/empty-list-message/empty-list-message";
 
-const InventoryTable = () => (
-    <KeyboardAvoidingView
-        style={TableStyles.flex}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-    >
-        <ImageBackground
-            source={require('../../assets/images/bg-image.png')}
-            resizeMode="contain"
-            style={TableStyles.image}
+const InventoryTable = () => {
+    const inventoryService = new InventoryService();
+
+    const { data: inventories, isFetching, refetch } = useQuery({
+        queryKey: ["get-inventories"],
+        queryFn: () => inventoryService.getAll(),
+    });
+
+    const { isRefreshing, onRefresh } = useRefresh(refetch);
+
+    if (isFetching) {
+        return <LoadingIndicator />;
+    }
+
+    return (
+        <KeyboardAvoidingView
+            style={TableStyles.flex}
+            behavior={Platform.OS === "ios" ? "padding" : undefined}
         >
             <View style={TableStyles.container}>
+                <Header
+                    title="Inventory"
+                    iconLibrary="MaterialIcons"
+                    iconName="inventory"
+                />
 
-                <TitleBar />
-
-                <HeaderRow />
+                <View style={TableStyles.headerRow}>
+                    <View style={TableStyles.headerCellItem}>
+                        <Text style={TableStyles.headerText}>Item Name</Text>
+                    </View>
+                    <View style={TableStyles.headerCellQuantity}>
+                        <Text style={TableStyles.headerText}>Quantity</Text>
+                    </View>
+                </View>
 
                 <FlatList
-                    data={INVENTORY_DATA}
+                    data={inventories}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
-                        <InventoryRow item={item.item} quantity={item.quantity} />
+                        <InventoryRow
+                            itemName={item.itemName}
+                            quantity={item.quantity}
+                            unit={item.unit}
+                        />
                     )}
+                    ListEmptyComponent={<EmptyListMessage title="No inventory available." />}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={isRefreshing}
+                            onRefresh={onRefresh}
+                        />
+                    }
                 />
             </View>
-        </ImageBackground>
-    </KeyboardAvoidingView>
-);
-
-const TitleBar = () => (
-    <View style={TableStyles.titleContainer}>
-        <Icon name="inventory" size={20} color="#333" />
-        <Text style={TableStyles.title}>Inventory</Text>
-    </View>
-);
-
-const HeaderRow = () => (
-    <View style={TableStyles.headerRow}>
-        <Text style={TableStyles.headerText}>Items</Text>
-        <Text style={TableStyles.headerText}>Quantity</Text>
-    </View>
-);
+        </KeyboardAvoidingView>
+    );
+};
 
 export default InventoryTable;

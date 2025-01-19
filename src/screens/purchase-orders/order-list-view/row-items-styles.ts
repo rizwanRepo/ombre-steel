@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+const RowListStyles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         backgroundColor: '#fff',
@@ -9,35 +9,36 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#ddd',
     },
-
     itemContainer: {
-        width: '50%',
+        width: '30%',
         justifyContent: 'center',
         borderRightWidth: 1,
         borderColor: '#ddd',
     },
     item: {
-        fontSize: 16,
         padding: 16,
         color: '#222222',
-        fontWeight: '500',
     },
-
     quantityContainer: {
-        width: '20%',
+        width: '40%',
         justifyContent: 'center',
         alignItems: 'center',
         borderRightWidth: 1,
         borderColor: '#ddd',
     },
+    viewContainer: {
+        width: '15%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderLeftWidth: 1,
+        borderColor: '#ddd',
+    },
     quantity: {
-        fontSize: 16,
         color: '#222222',
-        fontWeight: '500',
     },
 
     statusContainer: {
-        width: '30%',
+        width: '15%',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -51,17 +52,15 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
     },
-    completed: {
-        backgroundColor: '#4bad4b',
-    },
-    notCompleted: {
-        backgroundColor: '#c8a86c',
-    },
     buttonText: {
         color: '#fff',
         fontSize: 12,
-        fontWeight: '600',
+    },
+    statusIconContainer: {
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 
-export default styles;
+export default RowListStyles;

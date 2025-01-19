@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
 
 const RowStyles = StyleSheet.create({
-    row: {
+    container: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 15,
+        padding: 10,
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 4,
@@ -13,28 +13,15 @@ const RowStyles = StyleSheet.create({
         marginBottom: 10,
     },
     itemText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        flex: 1,
+        fontSize: 14,
     },
     rateContainer: {
         flexDirection: 'column',
         alignItems: 'flex-end',
         marginRight: 30,
     },
-    rate: {
+    price: {
         fontSize: 14,
-        fontWeight: 'bold',
-    },
-    change: {
-        fontSize: 12,
-        fontWeight: 400,
-    },
-    changeUp: {
-        color: 'green',
-    },
-    changeDown: {
-        color: 'red',
     },
     button: {
         backgroundColor: '#16486B',
@@ -43,7 +30,7 @@ const RowStyles = StyleSheet.create({
     },
     buttonText: {
         color: '#fff',
-        fontSize: 14,
+        fontSize: 12,
         fontWeight: 'bold',
         textAlign: 'center',
     },

@@ -10,15 +10,15 @@ const RowStyles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#ddd',
     },
-    item: {
+    itemName: {
         fontSize: 16,
         padding: 16,
         color: "#222222",
         fontWeight: 500,
-        width: "75%"
+        width: "65%"
     },
     quantity: {
-        width: "25%",
+        width: "35%",
         padding: 16,
         fontSize: 16,
         color: "#222222",

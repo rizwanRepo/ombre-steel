@@ -3,42 +3,60 @@ import {
     View,
     Text,
     FlatList,
-    ImageBackground,
+    RefreshControl,
 } from 'react-native';
-import Icon from "react-native-vector-icons/Fontisto";
+import { useQuery } from '@tanstack/react-query';
 
 import RateRow from './rate-row';
 import TableStyles from './table-styles';
-import { getFormattedDate, RATES_DATA } from '../../constants';
+import { getFormattedDate } from '../../constants';
+import Header from '../../components/header/header';
+import { ItemRatesService } from '../../services/item-rate-service';
+import { useRefresh } from '../../hooks/useRefresh';
+import LoadingIndicator from '../../components/loading-indicator/loading-indicator';
 
-const RateTable = () => (
-    <ImageBackground
-        source={require('../../assets/images/bg-image.png')}
-        resizeMode="contain"
-        style={TableStyles.image}
-    >
+const RateTable = () => {
+    const itemRatesService = new ItemRatesService();
+
+    const { data: itemRates, isFetching, refetch } = useQuery({
+        queryKey: ["get-item-rates"],
+        queryFn: () => itemRatesService.getAll(),
+    });
+
+    const { isRefreshing, onRefresh } = useRefresh(refetch);
+
+    if (isFetching) {
+        return <LoadingIndicator />;
+    }
+
+    return (
         <View style={TableStyles.container}>
-            <View style={TableStyles.titleContainer}>
-                <Icon name="money-symbol" size={20} color="#333" />
-                <View style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                    <Text style={TableStyles.title}>Rates </Text>
-                    <Text style={{ fontSize: 16, marginLeft: 10 }}>{getFormattedDate()}</Text>
-                </View>
-            </View>
+            <Header
+                title="Rates"
+                iconLibrary="FontAwesome"
+                iconName="money"
+                date={getFormattedDate()}
+            />
 
             <View style={TableStyles.headerRow}>
-                <Text style={TableStyles.headerText}>Items</Text>
-                <Text style={TableStyles.headerText}>Rate</Text>
+                <Text style={TableStyles.headerText}>Grade</Text>
+                <Text style={TableStyles.headerText}>Rate/Kg</Text>
                 <Text style={[TableStyles.headerText]}>Action</Text>
             </View>
 
             <FlatList
-                data={RATES_DATA}
-                keyExtractor={(item) => item.item}
+                data={itemRates || []}
+                keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => <RateRow item={item} />}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={isRefreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
             />
         </View>
-    </ImageBackground>
-);
+    );
+};
 
 export default RateTable;

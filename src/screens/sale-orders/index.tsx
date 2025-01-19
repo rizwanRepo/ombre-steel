@@ -2,12 +2,12 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
 import Navbar from '../navbar/navbar';
-import PurchaseOrderTable from './purchase-order-table';
+import SaleOrders from './sale-orders/sale-orders';
 
-const PurchaseOrderScreen = () => (
+const SaleOrderScreen = () => (
     <View style={styles.container}>
         <Navbar />
-        <PurchaseOrderTable />
+        <SaleOrders />
     </View>
 );
 
@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 16,
-        backgroundColor: '#F4F9FF',
+        backgroundColor: '#f0f4f7',
     },
 });
 
-export default PurchaseOrderScreen;
+export default SaleOrderScreen;
