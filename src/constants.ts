@@ -2,10 +2,10 @@ import { MenuItem } from "./screens/navbar/navbar";
 
 export const BASE_URL = "http://45.79.121.211:5001"
 
-export const getFormattedDate = () => {
-    const today = new Date();
-    const day = today.getDate();
-    const month = today.getMonth() + 1;
+export const getFormattedDate = (date?: Date) => {
+    const today = date || new Date();
+    const day = String(today.getDate()).padStart(2, "0");
+    const month = String(today.getMonth() + 1).padStart(2, "0");
     const year = today.getFullYear();
 
     return `${day}/${month}/${year}`;
@@ -14,7 +14,7 @@ export const getFormattedDate = () => {
 export const PURCHASE_TAB_ITEMS = [
     { key: 'details', label: 'Details' },
     { key: 'order-items', label: 'Order Items' },
-    { key: 'delivered', label: 'Delivered' },
+    { key: 'dispatched', label: 'Dispatched' },
 ];
 
 
@@ -33,3 +33,6 @@ export const PURCHASE_ORDERS_STATUS = [
     { name: "In Progress", hex: "#c8a86c" },
     { name: "Not Started", hex: "#4A9ADF" },
 ];
+
+export const TAB_NAME = ['details', 'order-items', 'dispatched'];
+export const SWIPE_THRESHOLD = 50;

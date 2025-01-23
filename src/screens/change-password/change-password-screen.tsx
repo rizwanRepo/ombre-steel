@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ScrollView } from 'react-native-gesture-handler';
 import {
     View,
     Text,
@@ -7,13 +6,14 @@ import {
     KeyboardAvoidingView,
     Platform,
     TouchableOpacity,
+    ScrollView,
 } from 'react-native';
+import { useMutation } from '@tanstack/react-query';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import styles from './styles';
 import { useUser } from '../../context/user-context';
 import CustomButton from '../../components/custom-button/custom-button';
-import { useMutation } from '@tanstack/react-query';
 import { ChangePasswordPayload, ChangePasswordService } from '../../services/change-password-service';
 
 interface IProps {
@@ -54,12 +54,8 @@ const ChangePasswordScreen = ({ navigation }: IProps) => {
             confirmPassword,
         };
         await onSave(changePassword);
-
-        // Navigate to login after successful password reset
-        // navigation.replace('login');
     };
 
-    // Validate passwords in real-time
     const validatePasswords = (newPass: string, confirmPass: string) => {
         if (newPass && confirmPass && newPass !== confirmPass) {
             setErrorMessage("Passwords do not match!");
@@ -68,7 +64,6 @@ const ChangePasswordScreen = ({ navigation }: IProps) => {
         }
     };
 
-    // Determine if the button should be disabled
     const isButtonDisabled = !newPassword || !confirmPassword || errorMessage !== null;
 
     return (
@@ -147,7 +142,7 @@ const ChangePasswordScreen = ({ navigation }: IProps) => {
                     </View>
 
                     <CustomButton
-                        title="Submit"
+                        title="Continue"
                         isLoading={isPending}
                         onPress={handleResetPassword}
                         disabled={isButtonDisabled || isPending}

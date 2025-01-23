@@ -13,63 +13,61 @@ import PlaceNewPurchaseOrders from '../screens/purchase-orders/place-new-purchas
 
 const Stack = createStackNavigator();
 
+const defaultOptions = { headerShown: false };
+
+// Define routes
+const routes = [
+    { name: "login", component: LoginScreen },
+    { name: "change-password", component: ChangePasswordScreen },
+    { name: "/", component: InventoryScreen },
+    { name: "rates", component: RateScreen },
+    { name: "sale-orders", component: SaleOrderScreen },
+    { name: "purchase-orders", component: PurchaseOrderScreen },
+    {
+        name: "place-new-purchase-orders",
+        component: PlaceNewPurchaseOrders,
+        options: { headerShown: true, title: "Purchase Orders" },
+    },
+    {
+        name: "purchase-order-detail",
+        component: PurchaseOrderDetailScreen,
+        options: { headerShown: true, title: "Purchase Orders" },
+    },
+    {
+        name: "add-today-sale-orders",
+        component: AddTodaySaleOrders,
+        options: { headerShown: true, title: "Sale Orders" },
+    },
+];
+
 const AuthNavigator = () => (
     <Stack.Navigator initialRouteName="login">
-        <Stack.Screen
-            name="login"
-            component={LoginScreen}
-            options={{ headerShown: false }}
-        />
-        <Stack.Screen
-            name="change-password"
-            component={ChangePasswordScreen}
-            options={{ headerShown: false }}
-        />
-        <Stack.Screen
-            name='/'
-            component={InventoryScreen}
-            options={{ headerShown: false }}
-        />
-        <Stack.Screen
-            name='rates'
-            component={RateScreen}
-            options={{ headerShown: false }}
-        />
-        <Stack.Screen
-            name='sale-orders'
-            component={SaleOrderScreen}
-            options={{ headerShown: false }}
-        />
-        <Stack.Screen
-            name='purchase-orders'
-            component={PurchaseOrderScreen}
-            options={{ headerShown: false }}
-        />
-        <Stack.Screen
-            name='place-new-purchase-orders'
-            component={PlaceNewPurchaseOrders}
-            options={{
-                headerShown: true,
-                title: "Purchase Orders"
-            }}
-        />
-        <Stack.Screen
-            name="purchase-order-detail"
-            component={PurchaseOrderDetailScreen}
-            options={{
-                headerShown: true,
-                title: "Purchase Orders"
-            }}
-        />
-        <Stack.Screen
-            name="add-today-sale-orders"
-            component={AddTodaySaleOrders}
-            options={{
-                headerShown: true,
-                title: "Sale Orders"
-            }}
-        />
+        {routes.map(({ name, component, options }) => (
+            <Stack.Screen
+                key={name}
+                name={name}
+                component={component}
+                options={
+                    options?.headerShown
+                        ? { ...options, ...globalHeaderStyles }
+                        : options || defaultOptions
+                }
+            />
+        ))}
     </Stack.Navigator>
 );
 
 export default AuthNavigator;
+
+// Global header styles for screens with `headerShown: true`
+const globalHeaderStyles = {
+    headerStyle: {
+        height: 50,
+        backgroundColor: '#f8f8f8',
+    },
+    headerTitleStyle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#333',
+    },
+};

@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
         color: "#222",
     },
     headerCellItem: {
-        width: "65%",
+        width: "50%",
     },
     headerCellQuantity: {
         width: "35%",
@@ -31,21 +31,21 @@ const styles = StyleSheet.create({
         borderColor: "#ddd",
     },
     itemName: {
-        fontSize: 16,
+        fontSize: 14,
         padding: 16,
-        color: "#222222",
-        fontWeight: "500",
-        width: "65%",
+        color: "#333",
+        fontWeight: "400",
+        width: "50%",
     },
     quantity: {
         width: "35%",
         padding: 16,
-        fontSize: 16,
+        fontSize: 14,
         color: "#222222",
         borderLeftWidth: 1,
         borderRightColor: "#ddd",
         paddingLeft: 16,
-        fontWeight: "500",
+        fontWeight: "400",
     },
     addButton: {
         backgroundColor: "#fff",
@@ -54,6 +54,13 @@ const styles = StyleSheet.create({
     },
     textStyle: {
         color: "#16486B"
+    },
+    editIconContainer: {
+        justifyContent: "center",
+        alignItems: "center",
+        borderLeftWidth: 1,
+        borderLeftColor: "#ddd",
+        width: 40
     },
 });
 

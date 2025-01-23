@@ -5,12 +5,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 8,
+        // padding: 8,
         backgroundColor: '#fff',
         marginBottom: 20,
         borderRadius: 4,
         borderWidth: 1,
+        height: 40,
         borderColor: '#ddd',
+        paddingHorizontal: 20
     },
     title: {
         fontSize: 18,
@@ -22,6 +24,13 @@ const styles = StyleSheet.create({
         fontSize: 16,
         letterSpacing: 1,
         marginLeft: 10
+    },
+    headerContent: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: "100%",
+        // marginTop: 8,
     },
 });
 

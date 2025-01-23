@@ -11,7 +11,7 @@ const RowStyles = StyleSheet.create({
         borderColor: '#ddd',
     },
     itemName: {
-        fontSize: 16,
+        fontSize: 14,
         padding: 16,
         color: "#222222",
         fontWeight: 500,
@@ -20,7 +20,7 @@ const RowStyles = StyleSheet.create({
     quantity: {
         width: "35%",
         padding: 16,
-        fontSize: 16,
+        fontSize: 14,
         color: "#222222",
         borderLeftWidth: 1,
         borderRightColor: '#ddd',

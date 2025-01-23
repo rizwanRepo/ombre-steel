@@ -12,7 +12,7 @@ import {
 import TableStyles from "./table-styles";
 import InventoryRow from "./inventory-row";
 import Header from "../../components/header/header";
-import { useRefresh } from "../../hooks/useRefresh";
+import { useRefresh } from "../../hooks/use-refresh";
 import { InventoryService } from "../../services/inventory-service";
 import LoadingIndicator from "../../components/loading-indicator/loading-indicator";
 import EmptyListMessage from "../../components/empty-list-message/empty-list-message";

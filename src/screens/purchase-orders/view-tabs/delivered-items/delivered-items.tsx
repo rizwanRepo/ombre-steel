@@ -10,7 +10,7 @@ const DeliveredItems = ({ items }: { items: any[] }) => (
         <View style={styles.tableHeader}>
             <Text style={styles.headerText}>Item Name</Text>
             <Text style={[styles.headerText, { marginLeft: '25%' }]}>Rate/Kg</Text>
-            <Text style={styles.headerText}>Qty Supplied</Text>
+            <Text style={styles.headerText}>Dispatched</Text>
         </View>
 
         {items && items.length > 0 ? (

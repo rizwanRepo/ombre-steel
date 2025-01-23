@@ -12,7 +12,7 @@ import TableStyles from './table-styles';
 import { getFormattedDate } from '../../constants';
 import Header from '../../components/header/header';
 import { ItemRatesService } from '../../services/item-rate-service';
-import { useRefresh } from '../../hooks/useRefresh';
+import { useRefresh } from '../../hooks/use-refresh';
 import LoadingIndicator from '../../components/loading-indicator/loading-indicator';
 
 const RateTable = () => {

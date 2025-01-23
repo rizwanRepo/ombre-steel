@@ -17,6 +17,7 @@ const RowListStyles = StyleSheet.create({
     },
     item: {
         padding: 16,
+        fontSize: 14,
         color: '#222222',
     },
     quantityContainer: {
@@ -33,8 +34,15 @@ const RowListStyles = StyleSheet.create({
         borderLeftWidth: 1,
         borderColor: '#ddd',
     },
+    iconContainer: {
+        width: "100%",
+        height: 40,
+        justifyContent: "center",
+        alignItems: "center",
+    },
     quantity: {
         color: '#222222',
+        fontSize: 14
     },
 
     statusContainer: {

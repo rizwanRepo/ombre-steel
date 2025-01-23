@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     addButton: {
         flexDirection: "row",
         backgroundColor: "#4CAF50",
-        padding: 15,
+        paddingVertical: 15,
         borderRadius: 5,
         alignItems: "center",
         justifyContent: "center",
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontWeight: "bold",
-        fontSize: 12,
+        fontSize: 14,
         color: '#222',
     },
     input: {

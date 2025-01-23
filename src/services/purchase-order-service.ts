@@ -9,9 +9,9 @@ export class PurchaseOrderService {
         this.baseUrl = `${BASE_URL}/saleOrder`;
     }
 
-    getAll() {
+    getAll(from: string, to: string) {
         return axios
-            .get(`${this.baseUrl}/party/purchaseOrder`)
+            .get(`${this.baseUrl}/party/purchaseOrder?from=${from}&to=${to}`)
             .then((response) => response.data.data);
     }
 

@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingVertical: 14,
+        paddingBottom: 8,
     },
     title: {
         color: '#000',
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     dropdownMenu: {
         width: '50%',
         position: 'absolute',
-        top: 80,
+        top: 60,
         right: 10,
         backgroundColor: '#FFFFFF',
         borderRadius: 10,

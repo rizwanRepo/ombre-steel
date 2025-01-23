@@ -6,13 +6,16 @@ import {
     Platform,
     RefreshControl,
     Text,
+    TouchableOpacity,
     View,
 } from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 
 import styles from "./styles";
 import Header from "../../../components/header/header";
-import { useRefresh } from "../../../hooks/useRefresh";
+import { useRefresh } from "../../../hooks/use-refresh";
+import useDatePicker from "../../../hooks/use-date-picker";
 import { SaleOrderService } from "../../../services/sale-orders-service";
 import CustomButton from "../../../components/custom-button/custom-button";
 import LoadingIndicator from "../../../components/loading-indicator/loading-indicator";
@@ -20,20 +23,21 @@ import EmptyListMessage from "../../../components/empty-list-message/empty-list-
 
 const SaleOrders = () => {
     const saleOrderService = new SaleOrderService();
+    const { selectedDate, onSelect } = useDatePicker();
     const navigation = useNavigation<NavigationProp<Record<string, object | undefined>>>();
 
-    const { data: saleOrders, isLoading, refetch } = useQuery({
-        queryKey: ["get-sale-orders"],
-        queryFn: () => saleOrderService.getAll(),
+    const { data: saleOrders, isFetching, refetch } = useQuery({
+        queryKey: ["get-sale-orders", selectedDate],
+        queryFn: () => saleOrderService.getAll(selectedDate, selectedDate),
     });
 
     const { isRefreshing, onRefresh } = useRefresh(refetch);
 
-    if (isLoading) {
+    if (isFetching) {
         return <LoadingIndicator />;
     }
 
-    const handleOnPress = () => navigation.navigate("add-today-sale-orders");
+    const handleOnPress = (orderId?: string) => navigation.navigate('add-today-sale-orders', { orderId });
 
     return (
         <KeyboardAvoidingView
@@ -41,9 +45,12 @@ const SaleOrders = () => {
             behavior={Platform.OS === "ios" ? "padding" : undefined}
         >
             <Header
-                title="Today`s Sale"
+                title="Sale"
                 iconLibrary="MaterialCommunityIcons"
                 iconName="sale"
+                isCalender={true}
+                updateDate={onSelect}
+                currentDate={selectedDate}
             />
 
             <View style={styles.headerRow}>
@@ -64,6 +71,12 @@ const SaleOrders = () => {
                         <Text style={styles.quantity}>
                             {item.quantity} {item.Item.primaryUnit}
                         </Text>
+                        <TouchableOpacity
+                            style={styles.editIconContainer}
+                            onPress={() => handleOnPress(item.id)}
+                        >
+                            <Icon name="edit" size={20} color="#333" />
+                        </TouchableOpacity>
                     </View>
                 )}
                 ListEmptyComponent={<EmptyListMessage title="No sale order available." />}
@@ -77,8 +90,8 @@ const SaleOrders = () => {
 
             <View style={{ marginHorizontal: 50, marginTop: 10 }}>
                 <CustomButton
-                    onPress={handleOnPress}
-                    title="Add Today`s Sale"
+                    onPress={() => handleOnPress()}
+                    title="Add Sale"
                     textStyle={styles.textStyle}
                     style={styles.addButton}
                 />

@@ -9,15 +9,27 @@ export class SaleOrderService {
         this.baseUrl = `${BASE_URL}/orderSalePartyWise`;
     }
 
-    getAll() {
+    getOne(id: number) {
         return axios
-            .get(this.baseUrl)
+            .get(`${this.baseUrl}/${id}`)
+            .then((response) => response.data.data);
+    }
+
+    getAll(from: string, to: string) {
+        return axios
+            .get(`${this.baseUrl}?from=${from}&to=${to}`)
             .then((response) => response.data.data);
     }
 
     create(todaySaleOrder: any) {
         return axios
             .post(this.baseUrl, todaySaleOrder)
+            .then((response) => response.data);
+    }
+
+    update(id: number | undefined, saleOrder: any) {
+        return axios
+            .put(`${this.baseUrl}/${id}`, saleOrder)
             .then((response) => response.data);
     }
 };

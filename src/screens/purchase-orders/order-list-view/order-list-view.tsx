@@ -12,21 +12,23 @@ import {
 
 import RowListView from './row-items';
 import OrderListViewStyles from './order-list-view-styles';
+import useDatePicker from '../../../hooks/use-date-picker';
 import { PurchaseOrderService } from '../../../services/purchase-order-service';
 import LoadingIndicator from '../../../components/loading-indicator/loading-indicator';
 import CustomButton from '../../../components/custom-button/custom-button';
-import { useRefresh } from '../../../hooks/useRefresh';
+import { useRefresh } from '../../../hooks/use-refresh';
 import { PURCHASE_ORDERS_STATUS } from '../../../constants';
 import Header from '../../../components/header/header';
 import EmptyListMessage from '../../../components/empty-list-message/empty-list-message';
 
 const OrderListView = () => {
-    const navigation = useNavigation<NavigationProp<Record<string, object | undefined>>>();
+    const { selectedDate, onSelect } = useDatePicker();
     const purchaseOrderService = new PurchaseOrderService();
+    const navigation = useNavigation<NavigationProp<Record<string, object | undefined>>>();
 
     const { data: purchaseOrders, isFetching, refetch } = useQuery({
-        queryKey: ["get-purchase-orders"],
-        queryFn: () => purchaseOrderService.getAll(),
+        queryKey: ["get-purchase-orders", selectedDate],
+        queryFn: () => purchaseOrderService.getAll(selectedDate, selectedDate),
     });
 
     const { isRefreshing, onRefresh } = useRefresh(refetch);
@@ -46,9 +48,12 @@ const OrderListView = () => {
                 title="Purchase Orders"
                 iconLibrary="MaterialCommunityIcons"
                 iconName="baby-carriage"
+                isCalender={true}
+                updateDate={onSelect}
+                currentDate={selectedDate}
             />
 
-            <View style={OrderListViewStyles.headerRow}>
+            <View style={[OrderListViewStyles.headerRow, { marginTop: 20 }]}>
                 <View style={OrderListViewStyles.headerCellItem}>
                     <Text style={OrderListViewStyles.headerText}>Grade</Text>
                 </View>
@@ -108,7 +113,7 @@ const OrderListView = () => {
             <View style={{ marginHorizontal: 50 }}>
                 <CustomButton
                     onPress={handleOnPress}
-                    title="Place New Purchase Order"
+                    title="Place Order"
                     textStyle={OrderListViewStyles.textStyle}
                     style={OrderListViewStyles.addButton}
                 />

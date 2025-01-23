@@ -58,7 +58,10 @@ const RowListView = ({ item, quantity, status, orderId }: IProps) => {
             </View>
 
             <View style={RowListStyles.viewContainer}>
-                <TouchableOpacity onPress={handleViewPress}>
+                <TouchableOpacity
+                    style={RowListStyles.iconContainer}
+                    onPress={handleViewPress}
+                >
                     <Icon
                         name={"eye"}
                         size={20}

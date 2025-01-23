@@ -76,10 +76,16 @@ const styles = StyleSheet.create({
     },
     iconTouchable: {
         position: 'absolute',
-        right: 10,
-        top: "55%",
+        right: 5,
+        top: 15,
         transform: [{ translateY: -12 }],
         zIndex: 1,
+        width: 50,
+        height: 45,
+        justifyContent: "center",
+        display: "flex",
+        alignItems: "center",
+        backgroundColor: "#fff"
     },
     iconImage: {
         width: 30,
