@@ -85,7 +85,7 @@ const OrderListView = () => {
                 }
             />
 
-            {purchaseOrders.length > 0 && (
+            {purchaseOrders?.length > 0 && (
                 <View style={OrderListViewStyles.colorsContainer}>
                     <View style={OrderListViewStyles.colorsRow}>
                         {PURCHASE_ORDERS_STATUS.map((color) => (

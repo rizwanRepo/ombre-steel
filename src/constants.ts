@@ -1,6 +1,7 @@
 import { MenuItem } from "./screens/navbar/navbar";
 
-export const BASE_URL = "http://45.79.121.211:5001"
+// export const BASE_URL = "http://45.79.121.211:5001"  // for development
+export const BASE_URL = "http://45.79.121.211:5025"   // for staging
 
 export const getFormattedDate = (date?: Date) => {
     const today = date || new Date();

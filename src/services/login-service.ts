@@ -26,7 +26,7 @@ export class LoginService {
 
     create(login: LoginPayload) {
         return axios
-            .post(`${this.baseUrl}/login`, login)
+            .post(`${this.baseUrl}/login/mobile`, login)
             .then((response) => response.data);
     }
 
