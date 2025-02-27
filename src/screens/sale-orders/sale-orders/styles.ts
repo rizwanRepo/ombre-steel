@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     flex: {
@@ -62,6 +62,11 @@ const styles = StyleSheet.create({
         borderLeftColor: "#ddd",
         width: 40
     },
+    addButtonContainer: {
+        marginHorizontal: 50,
+        marginTop: 10,
+        marginBottom: Platform.OS === 'ios' ? 10 : 0
+    }
 });
 
 export default styles;

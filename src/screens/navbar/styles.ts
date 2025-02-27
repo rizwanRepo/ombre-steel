@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     container: {
@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingBottom: 8,
+        marginTop: Platform.OS === 'ios' ? 50 : 0
     },
     title: {
         color: '#000',
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
     dropdownMenu: {
         width: '50%',
         position: 'absolute',
-        top: 60,
+        top: Platform.OS === 'ios' ? 120 : 60,
         right: 10,
         backgroundColor: '#FFFFFF',
         borderRadius: 10,

@@ -23,7 +23,7 @@ const RowStyles = StyleSheet.create({
         fontSize: 14,
         color: "#222222",
         borderLeftWidth: 1,
-        borderRightColor: '#ddd',
+        borderLeftColor: '#ddd',
         paddingLeft: 16,
         fontWeight: 500
     },

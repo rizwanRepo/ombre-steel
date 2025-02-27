@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View } from "react-native";
 
 import styles from "./styles";
@@ -23,25 +23,40 @@ const Header = ({
     isCalender = false,
     currentDate,
     updateDate
-}: IProps) => (
-    <View style={styles.titleContainer}>
-        <IconManager
-            library={iconLibrary}
-            name={iconName}
-        />
-        <View style={isCalender ? styles.headerContent : null}>
-            <Text style={styles.title}>{title}</Text>
-            {isCalender && (
-                <Text style={{ width: "50%" }}>
-                    <DatePicker
-                        onDateChange={updateDate}
-                        selectedDate={currentDate}
-                    />
-                </Text>
-            )}
+}: IProps) => {
+
+    const [isVisible, setIsVisible] = useState(false);
+
+    const showDatePicker = () => {
+        setIsVisible(true);
+    };
+
+    const hideDatePicker = () => {
+        setIsVisible(false);
+    };
+
+    return (
+        <View style={styles.titleContainer}>
+            <IconManager
+                library={iconLibrary}
+                name={iconName}
+            />
+            <View style={isCalender ? styles.headerContent : null}>
+                <Text style={styles.title}>{title}</Text>
+                {isCalender && (
+                    <Text style={{ width: "50%" }} onPress={showDatePicker}>
+                        <DatePicker
+                            onDateChange={updateDate}
+                            selectedDate={currentDate}
+                            isVisible={isVisible}
+                            hideDatePicker={hideDatePicker}
+                        />
+                    </Text>
+                )}
+            </View>
+            {date && <Text style={styles.date}>{date}</Text>}
         </View>
-        {date && <Text style={styles.date}>{date}</Text>}
-    </View>
-);
+    );
+}
 
 export default Header;

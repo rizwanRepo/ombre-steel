@@ -88,7 +88,7 @@ const SaleOrders = () => {
                 }
             />
 
-            <View style={{ marginHorizontal: 50, marginTop: 10 }}>
+            <View style={styles.addButtonContainer}>
                 <CustomButton
                     onPress={() => handleOnPress()}
                     title="Add Sale"
