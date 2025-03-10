@@ -20,15 +20,18 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     headerText: {
-        fontSize: 14,
+        fontSize: 12,
         fontWeight: 'bold',
     },
     cellDetail: {
         padding: 10,
+        fontSize: 12,
         borderWidth: 1,
         borderColor: "#ccc",
         borderRadius: 4,
         color: "grey",
+        display: "flex",
+        textAlignVertical: "center",
     },
     pendingContainer: {
         marginTop: 10,

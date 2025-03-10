@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     headerText: {
-        fontSize: 14,
+        fontSize: 12,
         fontWeight: 'bold',
     },
     detailsContainer: {
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     },
     flexCell: {
         flex: 1,
+        fontSize: 12
     }
 });
 

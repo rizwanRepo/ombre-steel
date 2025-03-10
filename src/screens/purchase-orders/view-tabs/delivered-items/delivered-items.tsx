@@ -9,7 +9,7 @@ const DeliveredItems = ({ items }: { items: any[] }) => (
     <ScrollView style={styles.container}>
         <View style={styles.tableHeader}>
             <Text style={styles.headerText}>Item Name</Text>
-            <Text style={[styles.headerText, { marginLeft: '25%' }]}>Rate/Kg</Text>
+            <Text style={[styles.headerText, { marginLeft: '15%' }]}>Rate/Kg</Text>
             <Text style={styles.headerText}>Dispatched</Text>
         </View>
 
@@ -26,9 +26,9 @@ const DeliveredItems = ({ items }: { items: any[] }) => (
                                 width: '100%',
                             }}
                         >
-                            <Text style={[styles.cellDetail, { minWidth: 150 }]}>{item.Item.name}</Text>
-                            <Text style={[styles.cellDetail, { minWidth: 60 }]}>{`₹ ${item.rate.toString()}`}</Text>
-                            <Text style={[styles.cellDetail, { minWidth: 60 }]}>
+                            <Text style={[styles.cellDetail, { width: "45%" }]}>{item.Item.name}</Text>
+                            <Text style={[styles.cellDetail, { width: "25%" }]}>{`₹ ${item.rate.toString()}`}</Text>
+                            <Text style={[styles.cellDetail, { width: "25%" }]}>
                                 {item.qtySupplie} {item.primaryUnit}
                             </Text>
                         </View>

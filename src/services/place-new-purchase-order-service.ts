@@ -9,9 +9,9 @@ export class PlaceNewPurchaseOrderService {
         this.baseUrl = `${BASE_URL}/saleOrder/party/order`;
     }
 
-    create(createPassword: any) {
+    create(purchaseOrder: any) {
         return axios
-            .post(this.baseUrl, createPassword)
+            .post(this.baseUrl, purchaseOrder)
             .then((response) => response.data);
     }
 };

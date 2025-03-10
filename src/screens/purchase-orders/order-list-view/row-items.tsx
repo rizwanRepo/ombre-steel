@@ -9,10 +9,11 @@ interface IProps {
     item: string;
     orderId: number;
     quantity: string;
+    itemName: string;
     status: "Completed" | "In Progress" | "Not Started";
 }
 
-const RowListView = ({ item, quantity, status, orderId }: IProps) => {
+const RowListView = ({ item, quantity, status, orderId, itemName }: IProps) => {
     const navigation = useNavigation<NavigationProp<Record<string, object | undefined>>>();
 
     const handleViewPress = () => {
@@ -38,22 +39,17 @@ const RowListView = ({ item, quantity, status, orderId }: IProps) => {
                 <Text style={RowListStyles.item}>{item}</Text>
             </View>
 
+            <View style={RowListStyles.itemNameContainer}>
+                <Text style={RowListStyles.quantity}>{itemName}</Text>
+            </View>
+
             <View style={RowListStyles.quantityContainer}>
                 <Text style={RowListStyles.quantity}>{quantity}</Text>
             </View>
 
             <View style={RowListStyles.statusContainer}>
-                <View
-                    style={[
-                        RowListStyles.statusIconContainer,
-                        getButtonStyle(),
-                    ]}
-                >
-                    <Icon
-                        name={"circle"}
-                        size={25}
-                        color="#fff"
-                    />
+                <View style={[RowListStyles.statusIconContainer, getButtonStyle()]}>
+                    <Icon name={"circle"} size={25} color="#fff" />
                 </View>
             </View>
 
@@ -62,11 +58,7 @@ const RowListView = ({ item, quantity, status, orderId }: IProps) => {
                     style={RowListStyles.iconContainer}
                     onPress={handleViewPress}
                 >
-                    <Icon
-                        name={"eye"}
-                        size={20}
-                        color="#aaa"
-                    />
+                    <Icon name={"eye"} size={20} color="#aaa" />
                 </TouchableOpacity>
             </View>
         </View>

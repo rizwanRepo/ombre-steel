@@ -12,6 +12,7 @@ interface IProps {
         amount: number;
         percentage: number;
         id: string;
+        grade: string;
     };
 }
 
@@ -26,11 +27,12 @@ const RateRow = ({ item }: IProps) => {
 
     return (
         <View style={RowStyles.container}>
-            <Text style={RowStyles.itemText}>{item.itemName?.toString()}</Text>
+            <Text style={RowStyles.itemName}>{item.itemName?.toString()}</Text>
+            <Text style={RowStyles.grade}>{item.grade?.toString()}</Text>
 
             <View style={RowStyles.rateContainer}>
-                <Text style={[RowStyles.price, { marginLeft: "30%" }]}>{`₹ ${item.price}`}</Text>
-                <Text style={{ color: amountColor, fontSize: 12, marginTop: 6 }}>
+                <Text style={[RowStyles.price]}>{`₹ ${item.price}`}</Text>
+                <Text style={{ color: amountColor, fontSize: 11, marginTop: 6 }}>
                     {item.amount} ({item.percentage})
                 </Text>
             </View>

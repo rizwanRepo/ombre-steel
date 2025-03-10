@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     headerText: {
-        fontSize: 14,
+        fontSize: 12,
         fontWeight: 'bold',
     },
     cellDetail: {
@@ -32,6 +32,9 @@ const styles = StyleSheet.create({
         borderColor: "#ccc",
         borderRadius: 4,
         color: "grey",
+        fontSize: 12,
+        display: "flex",
+        textAlignVertical: "center",
     }
 });
 

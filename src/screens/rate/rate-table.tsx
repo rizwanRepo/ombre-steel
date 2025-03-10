@@ -31,14 +31,15 @@ const RateTable = () => {
 
     return (
         <View style={TableStyles.container}>
-            <Header
+            {/* <Header
                 title="Rates"
                 iconLibrary="FontAwesome"
                 iconName="money"
                 date={getFormattedDate()}
-            />
+            /> */}
 
             <View style={TableStyles.headerRow}>
+                <Text style={TableStyles.headerText}>Item Type</Text>
                 <Text style={TableStyles.headerText}>Grade</Text>
                 <Text style={TableStyles.headerText}>Rate/Kg</Text>
                 <Text style={[TableStyles.headerText]}>Action</Text>

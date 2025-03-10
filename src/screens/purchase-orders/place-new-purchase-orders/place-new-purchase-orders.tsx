@@ -1,26 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
     View,
     Text,
     TextInput,
-    TouchableWithoutFeedback,
-    Keyboard,
     FlatList,
     RefreshControl,
+    StyleSheet,
 } from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { NavigationProp, useNavigation, useRoute, RouteProp } from "@react-navigation/native";
 
-import styles from "./styles";
 import { useUser } from "../../../context/user-context";
+import Header from "../../../components/header/header";
+import { GRADE_LIST, ITEM_TYPES } from "../../../constants";
 import Dropdown from "../../../components/dropdown/dropdown";
 import { ItemRatesService } from "../../../services/item-rate-service";
 import { LatestOrderNoService } from "../../../services/latest-order-no";
 import CustomButton from "../../../components/custom-button/custom-button";
-import { PlaceNewPurchaseOrderService } from "../../../services/place-new-purchase-order-service";
-import Header from "../../../components/header/header";
 import LoadingIndicator from "../../../components/loading-indicator/loading-indicator";
+import { PlaceNewPurchaseOrderService } from "../../../services/place-new-purchase-order-service";
 
 interface IParams {
     id?: string;
@@ -35,14 +34,12 @@ const PlaceNewPurchaseOrders = () => {
     const latestOrderNoService = new LatestOrderNoService();
     const placeNewPurchaseOrderService = new PlaceNewPurchaseOrderService();
 
-    const [openDropdown, setOpenDropdown] = useState(false);
-    const [selectedItem, setSelectedItem] = useState<any>(null);
-
     const { mutate: onSave, isPending } = useMutation({
         mutationFn: (data) => placeNewPurchaseOrderService.create(data),
         onSuccess: () => {
             navigation.navigate("purchase-orders");
         },
+        onError: () => { }
     });
 
     const { data: grades, isFetching: isLoading } = useQuery({
@@ -58,35 +55,37 @@ const PlaceNewPurchaseOrders = () => {
     const { control, handleSubmit, setValue, watch } = useForm({
         defaultValues: {
             grade: "",
+            itemType: "",
             totalQty: "",
             rate: "",
         },
     });
 
     const gradeValue = watch("grade");
+    const itemTypeValue = watch("itemType");
     const totalQtyValue = watch("totalQty");
 
     useEffect(() => {
-        const { id } = route.params || {};
+        const { id } = route?.params || {};
         if (id && grades) {
-            const selectedGrade = grades.find((item: { id: string }) => item.id === id);
-            if (selectedGrade) {
-                setSelectedItem(selectedGrade.itemName);
-                setValue("grade", selectedGrade.itemName);
-                setValue("rate", selectedGrade.price.toString());
+            const selectedOption = grades?.find((item: { id: string }) => item.id === id);
+            if (selectedOption) {
+                setValue("grade", selectedOption.grade);
+                setValue("itemType", selectedOption.itemName);
+                setValue("rate", selectedOption.price.toString());
             }
         }
     }, [route.params, grades, setValue]);
 
     useEffect(() => {
-        if (selectedItem) {
-            const selectedGrade = grades?.find((item: any) => item.itemName === selectedItem);
-            if (selectedGrade) {
-                setSelectedItem(selectedGrade);
-                setValue("rate", selectedGrade.price.toString());
-            }
+        const selectedOption = grades?.find(
+            (item: { grade: string, itemName: string }) => (
+                item.grade === gradeValue && item.itemName === itemTypeValue
+            ));
+        if (selectedOption) {
+            setValue("rate", selectedOption.price.toString());
         }
-    }, [selectedItem, grades, setValue]);
+    }, [gradeValue, itemTypeValue]);
 
     const onSubmit = async (data: any) => {
         const date = new Date(new Date());
@@ -94,17 +93,12 @@ const PlaceNewPurchaseOrders = () => {
 
         const updatedData = {
             ...data,
-            primaryUnit: selectedItem?.unit,
+            primaryUnit: "KG",
             partyId: user?.partyId,
             date: formattedDate,
             orderNo: latestOrderNo,
         };
         await onSave(updatedData);
-    };
-
-    const dismissKeyboard = () => {
-        Keyboard.dismiss();
-        setOpenDropdown(false);
     };
 
     if (isFetching || isLoading) {
@@ -114,110 +108,153 @@ const PlaceNewPurchaseOrders = () => {
     const isSubmitDisabled = !gradeValue || !totalQtyValue;
 
     return (
-        <TouchableWithoutFeedback onPress={dismissKeyboard}>
-            <View style={styles.container}>
-                <Header
-                    title="Place new purchase order"
-                    iconLibrary="MaterialCommunityIcons"
-                    iconName="baby-carriage"
-                />
+        <View style={styles.container}>
+            {/* <Header
+                title="Place new purchase order"
+                iconLibrary="MaterialCommunityIcons"
+                iconName="baby-carriage"
+            /> */}
 
-                <FlatList
-                    data={[1]}
-                    keyExtractor={() => "key"}
-                    refreshControl={
-                        <RefreshControl refreshing={isFetching} onRefresh={refetch} />
-                    }
-                    contentContainerStyle={{ flexGrow: 1 }}
-                    renderItem={() => (
-                        <>
-                            <View style={styles.headerRow}>
-                                <View style={styles.headerCellItem}>
-                                    <Text style={styles.headerText}>Grade</Text>
-                                </View>
-                                <View style={styles.headerCellRate}>
-                                    <Text style={styles.headerText}>Rate / Kg</Text>
-                                </View>
-                                <View style={styles.headerCellQuantity}>
-                                    <Text style={styles.headerText}>Quantity</Text>
-                                </View>
+            <FlatList
+                data={[1]}
+                keyExtractor={() => "key"}
+                refreshControl={
+                    <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+                }
+                contentContainerStyle={{ flexGrow: 1 }}
+                renderItem={() => (
+                    <View style={styles.cardContainer}>
+                        <View style={styles.cardRow}>
+                            <View style={styles.inputContainer}>
+                                <Text style={{ fontSize: 14, color: "#333" }}>Grade</Text>
+                                <Controller
+                                    control={control}
+                                    name="grade"
+                                    render={({ field: { onChange, value } }: any) => (
+                                        <Dropdown
+                                            placeholder="Grade"
+                                            value={value.value || gradeValue}
+                                            onChange={(item) => onChange(item.value)}
+                                            options={GRADE_LIST}
+                                            isDisable={!!route?.params}
+                                            dropdownStyle={[!!route?.params && styles.disabledRateInput, { height: 50 }]}
+                                        />
+                                    )}
+                                />
                             </View>
 
-                            <View style={styles.row}>
-                                <View style={{ width: "32%" }}>
-                                    <Controller
-                                        control={control}
-                                        name="grade"
-                                        render={({ field: { onChange, value } }) => (
-                                            <Dropdown
-                                                placeholder="Grade"
-                                                options={grades?.map((item: any) => item.itemName) || []}
-                                                value={value}
-                                                onChange={(newValue: any) => {
-                                                    onChange(newValue);
-                                                    setSelectedItem(newValue);
-                                                }}
-                                                isEnable={false}
-                                                isDropdownVisible={openDropdown}
-                                                toggleDropdown={() => setOpenDropdown(!openDropdown)}
-                                                closeDropdown={() => setOpenDropdown(false)}
-                                            />
-                                        )}
-                                    />
-                                </View>
-
-                                <View style={{ width: "30%", marginHorizontal: 10 }}>
-                                    <Controller
-                                        control={control}
-                                        name="rate"
-                                        render={({ field: { value } }) => (
-                                            <TextInput
-                                                style={[
-                                                    styles.input,
-                                                    value ? styles.disabledRateInput : styles.rateInput,
-                                                ]}
-                                                placeholder="Rate"
-                                                keyboardType="numeric"
-                                                value={value ? `₹ ${value}` : ""}
-                                                editable={false}
-                                                placeholderTextColor="#aaa"
-                                            />
-                                        )}
-                                    />
-                                </View>
-
-                                <View style={{ width: "30%" }}>
-                                    <Controller
-                                        control={control}
-                                        name="totalQty"
-                                        render={({ field: { onChange, value } }) => (
-                                            <TextInput
-                                                style={styles.input}
-                                                placeholder="Kg"
-                                                keyboardType="numeric"
-                                                value={value}
-                                                onChangeText={onChange}
-                                                placeholderTextColor="#aaa"
-                                            />
-                                        )}
-                                    />
-                                </View>
+                            <View style={[styles.inputContainer, { marginLeft: 10 }]}>
+                                <Text style={{ fontSize: 14, color: "#333" }}>Item Type</Text>
+                                <Controller
+                                    control={control}
+                                    name="itemType"
+                                    render={({ field: { onChange, value } }: any) => (
+                                        <Dropdown
+                                            placeholder="Item Type"
+                                            value={value.value || itemTypeValue}
+                                            onChange={(item) => onChange(item.value)}
+                                            options={ITEM_TYPES}
+                                            isDisable={!!route?.params}
+                                            dropdownStyle={[!!route?.params && styles.disabledRateInput, { height: 50 }]}
+                                        />
+                                    )}
+                                />
                             </View>
-                        </>
-                    )}
-                />
+                        </View>
 
-                <View style={styles.footer}>
-                    <CustomButton
-                        title="Submit"
-                        onPress={handleSubmit(onSubmit)}
-                        isLoading={isPending}
-                        disabled={isPending || isSubmitDisabled}
-                    />
-                </View>
+                        <View style={styles.cardRow}>
+                            <View style={styles.inputContainer}>
+                                <Text style={{ fontSize: 14, color: "#333" }}>Rate/(kg)</Text>
+                                <Controller
+                                    control={control}
+                                    name="rate"
+                                    render={({ field: { value } }) => (
+                                        <TextInput
+                                            style={[styles.input, styles.disabledRateInput]}
+                                            placeholder="Rate"
+                                            keyboardType="numeric"
+                                            value={value ? `₹ ${value}` : ""}
+                                            editable={false}
+                                            placeholderTextColor="#aaa"
+                                        />
+                                    )}
+                                />
+                            </View>
+
+                            <View style={[styles.inputContainer, { marginLeft: 10 }]}>
+                                <Text style={{ fontSize: 14, color: "#333" }}>Quantity</Text>
+                                <Controller
+                                    control={control}
+                                    name="totalQty"
+                                    render={({ field: { onChange, value } }) => (
+                                        <TextInput
+                                            style={styles.input}
+                                            placeholder="Quantity"
+                                            keyboardType="numeric"
+                                            value={value}
+                                            onChangeText={onChange}
+                                            placeholderTextColor="#aaa"
+                                        />
+                                    )}
+                                />
+                            </View>
+                        </View>
+                    </View>
+                )}
+            />
+
+            <View style={styles.footer}>
+                <CustomButton
+                    title="Submit"
+                    onPress={handleSubmit(onSubmit)}
+                    isLoading={isPending}
+                    disabled={isPending || isSubmitDisabled}
+                />
             </View>
-        </TouchableWithoutFeedback>
+        </View>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: 20,
+        backgroundColor: '#f0f4f7',
+    },
+    cardContainer: {
+        backgroundColor: "white",
+        borderRadius: 12,
+        padding: 16,
+        margin: 16,
+        shadowColor: "#000",
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 4,
+    },
+    cardRow: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginBottom: 12,
+    },
+    inputContainer: {
+        flex: 1,
+    },
+    input: {
+        height: 50,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: "#ccc",
+        paddingLeft: 10,
+        fontSize: 14,
+        backgroundColor: "#fff",
+    },
+    disabledRateInput: {
+        backgroundColor: "#f1f1f1",
+        color: "#333"
+    },
+    footer: {
+        padding: 16,
+    },
+});
 
 export default PlaceNewPurchaseOrders;

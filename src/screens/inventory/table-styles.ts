@@ -6,6 +6,7 @@ const TableStyles = StyleSheet.create({
     },
     container: {
         paddingBottom: 20,
+        paddingTop: 20,
         flex: 1,
         overflow: "scroll"
     },

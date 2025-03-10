@@ -6,7 +6,7 @@ export class ItemRatesService {
     private baseUrl: string;
 
     constructor() {
-        this.baseUrl = `${BASE_URL}/itemRate`;
+        this.baseUrl = `${BASE_URL}/itemRate/active/rate`;
     }
 
     getAll() {

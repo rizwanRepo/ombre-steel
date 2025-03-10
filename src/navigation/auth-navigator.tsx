@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import RateScreen from '../screens/rate';
-import LoginScreen from '../screens/login/login-screen';
+import LoginScreen from '../screens/auth-user/login/login-screen';
 import InventoryScreen from '../screens/inventory';
 import ChangePasswordScreen from '../screens/change-password/change-password-screen';
 import SaleOrderScreen from '../screens/sale-orders';
@@ -10,6 +10,8 @@ import PurchaseOrderScreen from '../screens/purchase-orders';
 import AddTodaySaleOrders from '../screens/sale-orders/add-today-sale-orders/add-today-sale-orders';
 import PurchaseOrderDetailScreen from '../screens/purchase-orders/view-tabs';
 import PlaceNewPurchaseOrders from '../screens/purchase-orders/place-new-purchase-orders/place-new-purchase-orders';
+import ForgotPassword from '../screens/auth-user/forgot-password/forgot-password';
+import VerifyOtp from '../screens/auth-user/verify-otp/verify-otp';
 
 const Stack = createStackNavigator();
 
@@ -19,6 +21,8 @@ const defaultOptions = { headerShown: false };
 const routes = [
     { name: "login", component: LoginScreen },
     { name: "change-password", component: ChangePasswordScreen },
+    { name: "forgot-password", component: ForgotPassword },
+    { name: "verify-otp", component: VerifyOtp },
     { name: "/", component: InventoryScreen },
     { name: "rates", component: RateScreen },
     { name: "sale-orders", component: SaleOrderScreen },

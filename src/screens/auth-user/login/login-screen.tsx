@@ -14,11 +14,11 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import styles from "./styles";
-import { useUser } from "../../context/user-context";
-import { validateEmail } from "../../utils/validation";
-import { LoginPayload, LoginService } from "../../services/login-service";
-import CustomButton from "../../components/custom-button/custom-button";
-import LoadingIndicator from "../../components/loading-indicator/loading-indicator";
+import { useUser } from "../../../context/user-context";
+import { validateEmail } from "../../../utils/validation";
+import { LoginPayload, LoginService } from "../../../services/login-service";
+import CustomButton from "../../../components/custom-button/custom-button";
+import LoadingIndicator from "../../../components/loading-indicator/loading-indicator";
 
 interface IProps {
     navigation: {
@@ -53,7 +53,7 @@ const LoginScreen = ({ navigation }: IProps) => {
             if (!data.data.isPasswordChanged) {
                 navigation.navigate("change-password");
             } else {
-                navigation.replace("/");
+                navigation.replace("rates");
             }
         },
         onError: () => setErrorMessage("Username or password is incorrect. Please try again."),
@@ -114,7 +114,7 @@ const LoginScreen = ({ navigation }: IProps) => {
                     <Image
                         alt="logo"
                         style={styles.logo}
-                        source={require("../../assets/images/ombre-logo.png")}
+                        source={require("../../../assets/images/ombre-logo.png")}
                     />
 
                     <Text style={styles.title}>Log in to your Account</Text>
@@ -174,6 +174,13 @@ const LoginScreen = ({ navigation }: IProps) => {
                             )}
                         </View>
                     </View>
+
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate("forgot-password")}
+                        style={styles.backToLoginContainer}
+                    >
+                        <Text style={styles.backToLoginText}>Forgot Password?</Text>
+                    </TouchableOpacity>
 
                     <CustomButton
                         title="Login"

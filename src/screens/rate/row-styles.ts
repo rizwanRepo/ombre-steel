@@ -12,16 +12,29 @@ const RowStyles = StyleSheet.create({
         backgroundColor: '#fff',
         marginBottom: 10,
     },
-    itemText: {
+    grade: {
         fontSize: 14,
+        fontWeight: "500",
+        width: "20%",
+        alignItems: 'center',
+        textAlign: "right",
+    },
+    itemName: {
+        width: "20%",
+        display: "flex",
+        fontSize: 14,
+        fontWeight: "500",
     },
     rateContainer: {
         flexDirection: 'column',
         alignItems: 'flex-end',
+        alignContent: "center",
+        width: "30%",
         marginRight: 30,
     },
     price: {
         fontSize: 14,
+        fontWeight: "500"
     },
     button: {
         backgroundColor: '#16486B',
@@ -30,7 +43,7 @@ const RowStyles = StyleSheet.create({
     },
     buttonText: {
         color: '#fff',
-        fontSize: 12,
+        fontSize: 11,
         fontWeight: 'bold',
         textAlign: 'center',
     },

@@ -1,74 +1,77 @@
-import React, { useState } from "react";
-import {
-    View,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    FlatList,
-} from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import React from "react";
+import { View, Text } from "react-native";
+import { TextStyle, ViewStyle } from 'react-native';
+import ArrowIcon from 'react-native-vector-icons/MaterialIcons';
+import { Dropdown as RNE_Dropdown } from 'react-native-element-dropdown';
 
 import styles from "./styles";
+
+export interface DropdownOption {
+    label: string;
+    value: string;
+    id: number;
+}
+
+interface IProps {
+    placeholder: string;
+    options: DropdownOption[];
+    value: string;
+    onChange: (item: DropdownOption) => void;
+    isDisable?: boolean;
+    search?: boolean;
+    containerStyle?: ViewStyle;
+    dropdownStyle?: ViewStyle | any;
+    placeholderStyle?: TextStyle;
+    selectedTextStyle?: TextStyle;
+}
 
 const Dropdown = ({
     placeholder,
     options,
     value,
     onChange,
-    isDropdownVisible,
-    toggleDropdown,
-    closeDropdown,
-    isEnable = true,
-}: any) => {
-    const [searchText, setSearchText] = useState("");
+    isDisable,
+    containerStyle,
+    dropdownStyle,
+    placeholderStyle,
+    selectedTextStyle,
+    search = false
+}: IProps) => {
+
+    const renderItem = (item: DropdownOption) => {
+        return (
+            <View style={styles.itemStyle}>
+                <Text style={{ fontSize: 14 }}>{item.label}</Text>
+            </View>
+        );
+    };
 
     return (
-        <View style={styles.dropdownContainer}>
-            <TouchableOpacity style={styles.dropdown} onPress={toggleDropdown}>
-                <Text
-                    style={[
-                        styles.dropdownText,
-                        value === "" ? styles.placeholderText : styles.selectedText,
-                    ]}
-                >
-                    {value || placeholder}
-                </Text>
-                <Icon name={isDropdownVisible ? "keyboard-arrow-up" : "keyboard-arrow-down"} size={20} />
-            </TouchableOpacity>
-
-            {isDropdownVisible && (
-                <View style={styles.dropdownList}>
-                    {isEnable && (
-                        <TextInput
-                            style={styles.searchInput}
-                            placeholder="Search here..."
-                            placeholderTextColor="rgba(0, 0, 0, 0.2)"
-                            value={searchText}
-                            onChangeText={setSearchText}
-                        />
-                    )}
-                    <FlatList
-                        data={options.filter((option: any) =>
-                            option.toLowerCase().includes(searchText.toLowerCase())
-                        )}
-                        keyExtractor={(_, index) => index.toString()}
-                        renderItem={({ item }) => (
-                            <TouchableOpacity
-                                style={styles.dropdownItem}
-                                onPress={() => {
-                                    onChange(item);
-                                    closeDropdown();
-                                    setSearchText("");
-                                }}
-                            >
-                                <Text>{item}</Text>
-                            </TouchableOpacity>
-                        )}
-                    />
-                </View>
+        <RNE_Dropdown
+            style={[styles.dropdown, dropdownStyle, isDisable && styles.disabledRateInput]}
+            placeholderStyle={[styles.placeholderStyle, placeholderStyle]}
+            selectedTextStyle={[styles.selectedTextStyle, selectedTextStyle]}
+            data={options}
+            maxHeight={250}
+            labelField="label"
+            valueField="value"
+            search={search}
+            searchPlaceholder="Search..."
+            placeholder={placeholder}
+            value={value}
+            disable={isDisable}
+            onChange={(item) => onChange(item)}
+            renderRightIcon={() => (
+                <ArrowIcon
+                    name="arrow-drop-down"
+                    size={24}
+                    style={styles.icon}
+                />
             )}
-        </View>
+            renderItem={renderItem}
+            containerStyle={containerStyle}
+        />
     );
-}
+};
 
 export default Dropdown;

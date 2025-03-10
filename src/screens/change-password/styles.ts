@@ -29,6 +29,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#1A293DD4',
         marginBottom: 24,
+        display: "flex",
+        textAlign: "center",
+        lineHeight: 20,
     },
     inputWrapper: {
         padding: 20,

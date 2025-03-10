@@ -7,21 +7,19 @@ const OrderListViewStyles = StyleSheet.create({
     headerRow: {
         flexDirection: 'row',
         marginBottom: 15,
+        marginTop: -10
     },
     headerCellItem: {
-        width: '40%',
+        width: '18%',
     },
     headerCellQuantity: {
-        width: '30%',
+        width: '27%',
     },
     headerCellStatus: {
-        width: '15%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingLeft: 8,
+        width: '14%',
     },
     headerText: {
-        fontSize: 14,
+        fontSize: 13,
         fontWeight: 'bold',
     },
     addButton: {
@@ -38,19 +36,20 @@ const OrderListViewStyles = StyleSheet.create({
     colorsRow: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
     },
     colorItem: {
-        flexDirection: 'column',
+        flexDirection: 'row',
         alignItems: 'center',
     },
     colorCircle: {
-        width: 20,
-        height: 20,
+        width: 15,
+        height: 15,
         borderRadius: 20,
     },
     colorName: {
-        marginTop: 5,
+        marginLeft: 5,
+        fontSize: 12
     },
 });
 

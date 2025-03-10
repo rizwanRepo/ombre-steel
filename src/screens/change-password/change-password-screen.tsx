@@ -10,11 +10,16 @@ import {
 } from 'react-native';
 import { useMutation } from '@tanstack/react-query';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { RouteProp, useRoute } from '@react-navigation/native';
 
 import styles from './styles';
 import { useUser } from '../../context/user-context';
 import CustomButton from '../../components/custom-button/custom-button';
-import { ChangePasswordPayload, ChangePasswordService } from '../../services/change-password-service';
+import {
+    ChangePasswordPayload,
+    ChangePasswordService,
+    ResetPasswordPayload
+} from '../../services/change-password-service';
 
 interface IProps {
     navigation: {
@@ -23,20 +28,27 @@ interface IProps {
     };
 }
 
+interface IParams {
+    isMobile: boolean;
+    email: string;
+}
+
 const ChangePasswordScreen = ({ navigation }: IProps) => {
+    const { user } = useUser();
+    const route = useRoute<RouteProp<{ params: IParams }>>();
+    const changePasswordService = new ChangePasswordService();
+
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const changePasswordService = new ChangePasswordService();
-    const { user } = useUser();
 
     const { mutate: onSave, isPending } = useMutation({
         mutationFn: (data: ChangePasswordPayload) => changePasswordService.create(data),
         onSuccess: () => {
             setErrorMessage(null);
-            navigation.replace('/');
+            navigation.replace('rates');
         },
         onError: (err: { message: string }) => {
             const errMsg = err.message || "Something went wrong, please try again.";
@@ -44,16 +56,34 @@ const ChangePasswordScreen = ({ navigation }: IProps) => {
         },
     });
 
+    const { mutate: onReset } = useMutation({
+        mutationFn: (data: ResetPasswordPayload) => changePasswordService.resetPassword(data),
+        onSuccess: () => {
+            setErrorMessage(null);
+            navigation.replace('rates');
+        },
+        onError: (err: { message: string }) => {
+            const errMsg = err.message || "Something went wrong, please try again.";
+            setErrorMessage(errMsg);
+        },
+    });
+
+
     const handleResetPassword = async () => {
         setErrorMessage(null);
 
-        const changePassword = {
-            userId: user?.userId,
-            currentPassword: user?.oldPassword,
-            newPassword,
+        const payloadData: any = {
             confirmPassword,
+            ...(route.params?.isMobile
+                ? { email: route.params?.email, password: newPassword, isMobile: route.params?.isMobile }
+                : { newPassword, currentPassword: user?.oldPassword, userId: user?.userId }),
         };
-        await onSave(changePassword);
+
+        if (route.params?.isMobile) {
+            await onReset(payloadData);
+        } else {
+            await onSave(payloadData);
+        }
     };
 
     const validatePasswords = (newPass: string, confirmPass: string) => {
@@ -74,9 +104,13 @@ const ChangePasswordScreen = ({ navigation }: IProps) => {
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View style={styles.container}>
                     <Text style={styles.heading}>{user?.name}</Text>
-                    <Text style={styles.title}>Create New Password</Text>
+                    <Text style={styles.title}>{route.params?.isMobile ? "Reset Your Password" : "Create a New Password"}</Text>
 
-                    <Text style={styles.subtitle}>Create a strong password</Text>
+                    <Text style={styles.subtitle}>
+                        {route.params?.isMobile ?
+                            "Enter a new password below to secure your account."
+                            : "Create a strong, unique password to protect your account."}
+                    </Text>
                     <View style={styles.inputWrapper}>
                         <View style={styles.inputContainer}>
                             <Text style={styles.label}>Enter new password</Text>

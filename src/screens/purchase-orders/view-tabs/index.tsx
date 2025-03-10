@@ -95,7 +95,7 @@ const PurchaseOrderDetailScreen = ({ route }: any) => {
                     {activeTab === 'details' && (
                         <OrderDetails
                             order={purchaseOrder}
-                            totalQty={purchaseOrder.items.reduce(
+                            totalQty={purchaseOrder?.items?.reduce(
                                 (total: number, item: { qty: number }) => (item.qty ? total + item.qty : total),
                                 0
                             )}
@@ -133,11 +133,11 @@ const PurchaseOrderDetailScreen = ({ route }: any) => {
                     />
                 }
             >
-                <Header
+                {/* <Header
                     title="View Purchase Order"
                     iconLibrary="MaterialCommunityIcons"
                     iconName="baby-carriage"
-                />
+                /> */}
                 <Tabs
                     activeTab={activeTab}
                     onTabChange={(tab) => {

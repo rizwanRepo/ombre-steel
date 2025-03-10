@@ -6,8 +6,8 @@ const styles = StyleSheet.create({
     },
     headerRow: {
         flexDirection: "row",
-        justifyContent: "space-between",
         marginBottom: 8,
+        marginTop: -10
     },
     headerText: {
         fontWeight: "bold",
@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     },
     headerCellQuantity: {
         width: "35%",
-        marginLeft: 10,
     },
     container: {
         flexDirection: "row",
@@ -46,6 +45,9 @@ const styles = StyleSheet.create({
         borderRightColor: "#ddd",
         paddingLeft: 16,
         fontWeight: "400",
+        textAlignVertical: "center",
+        display: "flex",
+        // textAlign: "center"
     },
     addButton: {
         backgroundColor: "#fff",
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderLeftWidth: 1,
         borderLeftColor: "#ddd",
-        width: 40
+        width: "15%"
     },
     addButtonContainer: {
         marginHorizontal: 50,

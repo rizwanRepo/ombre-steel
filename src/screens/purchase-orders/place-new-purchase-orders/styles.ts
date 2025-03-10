@@ -17,12 +17,14 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         borderRadius: 6,
         display: "flex",
-        justifyContent: "space-evenly"
+        width: "100%",
+        justifyContent: "space-between"
     },
     headerRow: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
         marginBottom: 8,
+        width: "100%",
+        justifyContent: "space-between",
     },
     headerText: {
         fontSize: 14,
@@ -34,23 +36,12 @@ const styles = StyleSheet.create({
         borderColor: "#ccc",
         borderRadius: 5,
         padding: 10,
-        fontSize: 14,
+        fontSize: 12,
         width: "100%",
         backgroundColor: "#fff",
     },
-    headerCellItem: {
-        width: '33%',
-        marginLeft: 10,
-    },
-    headerCellQuantity: {
-        width: '33%',
-        marginLeft: -30,
-    },
-    headerCellRate: {
-        width: '33%',
-        marginRight: 30,
-        left: 0,
-        display: "flex",
+    headerCell: {
+        width: 120,
     },
     footer: {
         position: "absolute",
@@ -62,10 +53,18 @@ const styles = StyleSheet.create({
     disabledRateInput: {
         backgroundColor: "#f0f0f0",
     },
-    rateInput: {
-        borderColor: "#ccc",
-        borderWidth: 1,
-        backgroundColor: "#ffffff",
+    inputContainer: {
+        width: 120,
+    },
+    cardContainer: {
+        backgroundColor: "#fff",
+        borderRadius: 8,
+        padding: 10,
+        marginVertical: 5,
+        shadowColor: "#000",
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 3,
     },
 });
 

@@ -37,11 +37,11 @@ const InventoryTable = () => {
             behavior={Platform.OS === "ios" ? "padding" : undefined}
         >
             <View style={TableStyles.container}>
-                <Header
+                {/* <Header
                     title="Inventory"
                     iconLibrary="MaterialIcons"
                     iconName="inventory"
-                />
+                /> */}
 
                 <View style={TableStyles.headerRow}>
                     <View style={TableStyles.headerCellItem}>

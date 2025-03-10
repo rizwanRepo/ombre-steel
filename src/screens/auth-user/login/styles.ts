@@ -34,10 +34,10 @@ const styles = StyleSheet.create({
         shadowColor: "#00001A",
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 1,
-        shadowRadius: 2,
+        // shadowRadius: 2,
 
         // Shadow for Android
-        elevation: 2,
+        // elevation: 2,
     },
     label: {
         fontSize: 14,
@@ -106,6 +106,15 @@ const styles = StyleSheet.create({
         color: '#cc0000',
         fontSize: 14,
         textAlign: 'center',
+    },
+    backToLoginContainer: {
+        alignSelf: "flex-end",
+        marginVertical: 10,
+    },
+    backToLoginText: {
+        color: "#16486B",
+        fontSize: 14,
+        textDecorationLine: "underline",
     },
 });
 

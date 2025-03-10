@@ -25,10 +25,12 @@ export interface MenuItem {
 };
 
 const Navbar = () => {
-    const { user, logout } = useUser();
+    const { logout } = useUser();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigation = useNavigation<NavigationProp<Record<string, object | undefined>>>();
     const route = useRoute<RouteProp<Record<string, object | undefined>, string>>();
+
+    const currentRouteLabel = MENU_ITEMS.find(item => item.route === route.name)?.label;
 
     const handleMenuItemPress = async (item: MenuItem) => {
         setIsMenuOpen(false);
@@ -54,13 +56,6 @@ const Navbar = () => {
         );
     };
 
-    const truncateText = (text: string, maxLength: number) => {
-        if (text.length > maxLength) {
-            return `${text.slice(0, maxLength)}....`;
-        }
-        return text;
-    };
-
     return (
         <View style={styles.container}>
             {route.name !== "/" && <TouchableOpacity
@@ -74,8 +69,8 @@ const Navbar = () => {
                 />
             </TouchableOpacity>}
 
-            <Text style={styles.title}>
-                {truncateText(user?.name || "", 30)}
+            <Text style={[styles.title, route.name === "/" && { marginLeft: 10}]}>
+                {currentRouteLabel}
             </Text>
 
             <TouchableOpacity
@@ -84,7 +79,7 @@ const Navbar = () => {
             >
                 <MaterialIcons
                     name={isMenuOpen ? 'close' : 'menu'}
-                    size={24}
+                    size={25}
                     color="#000"
                 />
             </TouchableOpacity>
