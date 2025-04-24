@@ -12,6 +12,7 @@ import PurchaseOrderDetailScreen from '../screens/purchase-orders/view-tabs';
 import PlaceNewPurchaseOrders from '../screens/purchase-orders/place-new-purchase-orders/place-new-purchase-orders';
 import ForgotPassword from '../screens/auth-user/forgot-password/forgot-password';
 import VerifyOtp from '../screens/auth-user/verify-otp/verify-otp';
+import GodownReport from '../screens/godown-report/godown-report';
 
 const Stack = createStackNavigator();
 
@@ -41,6 +42,10 @@ const routes = [
         name: "add-today-sale-orders",
         component: AddTodaySaleOrders,
         options: { headerShown: true, title: "Sale Orders" },
+    },
+    {
+        name: "godown-report",
+        component: GodownReport,
     },
 ];
 

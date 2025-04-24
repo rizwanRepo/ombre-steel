@@ -62,6 +62,7 @@ const PlaceNewPurchaseOrders = () => {
     });
 
     const gradeValue = watch("grade");
+    const rateValue = watch("rate");
     const itemTypeValue = watch("itemType");
     const totalQtyValue = watch("totalQty");
 
@@ -84,6 +85,8 @@ const PlaceNewPurchaseOrders = () => {
             ));
         if (selectedOption) {
             setValue("rate", selectedOption.price.toString());
+        } else {
+            setValue("rate", '');
         }
     }, [gradeValue, itemTypeValue]);
 
@@ -105,7 +108,7 @@ const PlaceNewPurchaseOrders = () => {
         return <LoadingIndicator />;
     }
 
-    const isSubmitDisabled = !gradeValue || !totalQtyValue;
+    const isSubmitDisabled = !gradeValue || !totalQtyValue || !rateValue;
 
     return (
         <View style={styles.container}>

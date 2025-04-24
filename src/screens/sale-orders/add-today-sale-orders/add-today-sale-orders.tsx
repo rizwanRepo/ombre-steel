@@ -173,6 +173,7 @@ const AddTodaySaleOrders = ({ route }: any) => {
                                                 placeholder="Item Type"
                                                 options={ITEM_TYPES}
                                                 value={value}
+                                                isDisable={orderId}
                                                 // isDisable={!getValues(`items.${index}.grade`)}
                                                 onChange={(value) => onChange(value.value)}
                                                 dropdownStyle={[orderId && styles.disabledRateInput, { height: 50 }]}
@@ -198,6 +199,7 @@ const AddTodaySaleOrders = ({ route }: any) => {
                                                     value: item.itemName
                                                 })) || []}
                                                 value={value}
+                                                isDisable={orderId}
                                                 onChange={(newValue: DropdownOption) => handleDropdownChange(newValue, index)}
                                                 dropdownStyle={[orderId && styles.disabledRateInput, { height: 50 }]}
                                             // isDisable={!getValues(`items.${index}.grade`) || !getValues(`items.${index}.item_type`)}
@@ -209,14 +211,14 @@ const AddTodaySaleOrders = ({ route }: any) => {
 
                             <View style={styles.secondRow}>
                                 <View style={{ width: "47%", marginRight: 8 }}>
-                                    <Text style={{ fontSize: 14, color: "#333" }}>Total Quantity</Text>
+                                    <Text style={{ fontSize: 14, color: "#333" }}>Rate/(kg)</Text>
                                     <Controller
                                         control={control}
                                         name={`items.${index}.total_quantity`}
                                         render={({ field: { value } }) => (
                                             <TextInput
                                                 style={[styles.input, styles.disabledRateInput]}
-                                                placeholder="Total quantity"
+                                                placeholder="Rate"
                                                 value={value ? `₹ ${value}` : ""}
                                                 editable={false}
                                                 placeholderTextColor="#aaa"

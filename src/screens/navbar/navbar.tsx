@@ -15,8 +15,8 @@ import {
 } from 'react-native';
 
 import styles from './styles';
-import { MENU_ITEMS } from '../../constants';
 import { useUser } from '../../context/user-context';
+import { ADMIN_MENU_ITEMS, PARTY_MENU_ITEMS } from '../../constants';
 
 export interface MenuItem {
     id: string;
@@ -25,12 +25,12 @@ export interface MenuItem {
 };
 
 const Navbar = () => {
-    const { logout } = useUser();
+    const { logout, user } = useUser();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigation = useNavigation<NavigationProp<Record<string, object | undefined>>>();
     const route = useRoute<RouteProp<Record<string, object | undefined>, string>>();
 
-    const currentRouteLabel = MENU_ITEMS.find(item => item.route === route.name)?.label;
+    const currentRouteLabel = (user?.isAdmin ? ADMIN_MENU_ITEMS : PARTY_MENU_ITEMS).find(item => item.route === route.name)?.label;
 
     const handleMenuItemPress = async (item: MenuItem) => {
         setIsMenuOpen(false);
@@ -58,7 +58,7 @@ const Navbar = () => {
 
     return (
         <View style={styles.container}>
-            {route.name !== "/" && <TouchableOpacity
+            {(route.name !== "godown-report" && route.name !== "/") && <TouchableOpacity
                 style={styles.backButton}
                 onPress={() => navigation.goBack()}
             >
@@ -69,7 +69,11 @@ const Navbar = () => {
                 />
             </TouchableOpacity>}
 
-            <Text style={[styles.title, route.name === "/" && { marginLeft: 10}]}>
+            <Text style={[
+                styles.title,
+                (route.name === "/" || route.name === "godown-report") &&
+                { marginLeft: 10 }]
+            }>
                 {currentRouteLabel}
             </Text>
 
@@ -97,7 +101,7 @@ const Navbar = () => {
                 >
                     <View style={styles.dropdownMenu}>
                         <FlatList
-                            data={MENU_ITEMS}
+                            data={user?.isAdmin ? ADMIN_MENU_ITEMS : PARTY_MENU_ITEMS}
                             keyExtractor={(item) => item.id}
                             renderItem={renderMenuItem}
                         />

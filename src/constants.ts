@@ -1,8 +1,9 @@
 import { MenuItem } from "./screens/navbar/navbar";
 
-// export const BASE_URL = "http://192.168.129.249:5001/api"  // for development
+// export const BASE_URL = "http://192.168.72.249:5001/api"  // for development
 // export const BASE_URL = "http://45.79.121.211:5001/api"   // for staging
-export const BASE_URL = "https://ombre.repozitory.com/api" // for Production URL
+// export const BASE_URL = "http://139.162.75.101:5001/api"
+export const BASE_URL = "https://omnisync.repozitory.com/api" // for Production URL
 
 export const getFormattedDate = (date?: Date) => {
     const today = date || new Date();
@@ -20,14 +21,38 @@ export const PURCHASE_TAB_ITEMS = [
 ];
 
 
-// Mock data for Menu
-export const MENU_ITEMS: MenuItem[] = [
+// Mock data for Party Menu Items
+export const PARTY_MENU_ITEMS: MenuItem[] = [
     { id: 'rates', label: 'Rates', route: 'rates' },
     { id: 'inventory', label: 'My Inventory', route: '/' },
     { id: 'sale-orders', label: "Sale Order", route: 'sale-orders' },
     { id: 'purchase-orders', label: 'Purchase Order', route: 'purchase-orders' },
     { id: 'logout', label: 'Logout', route: 'logout' },
 ];
+
+// Mock data for Admin Menu Items
+export const ADMIN_MENU_ITEMS: MenuItem[] = [
+    { id: 'godown-report', label: 'Godown Report', route: 'godown-report' },
+    { id: 'logout', label: 'Logout', route: 'logout' },
+];
+
+// Mock data for Admin Menu Items
+export const GODOWN_ITEMS = [
+    { id: 1, label: 'All Godown', value: 'all' },
+    { id: 2, label: 'Select Godown', value: 'select' },
+];
+
+// Mock data for Admin Menu Items
+export const ALL_GODOWN_ITEMS = [
+    // { id: 1, label: 'By Item', value: 'byItem' },
+    { id: 1, label: 'By Godown', value: 'byGodown' },
+];
+
+// Mock data for Admin Menu Items
+// export const SELECT_GODOWN_ITEMS = [
+//     { id: 1, label: 'By Item', value: 'byItem' },
+//     { id: 2, label: 'By Godown', value: 'byGodown' },
+// ];
 
 // Status Colors Name For Purchase Orders
 export const PURCHASE_ORDERS_STATUS = [

@@ -7,6 +7,7 @@ interface User {
     token: string;
     name: string;
     partyId: number;
+    isAdmin: boolean;
     oldPassword?: string;
 }
 

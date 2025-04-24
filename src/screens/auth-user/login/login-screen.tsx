@@ -47,13 +47,14 @@ const LoginScreen = ({ navigation }: IProps) => {
                 name: data.data.name,
                 oldPassword: password,
                 partyId: data.data.partyId,
+                isAdmin: data.data.isAdmin,
                 token: data.access_token,
             });
             await AsyncStorage.setItem("access_token", data.access_token);
             if (!data.data.isPasswordChanged) {
                 navigation.navigate("change-password");
             } else {
-                navigation.replace("rates");
+                navigation.replace(data.data.isAdmin ? "godown-report" : "rates");
             }
         },
         onError: () => setErrorMessage("Username or password is incorrect. Please try again."),
@@ -68,10 +69,11 @@ const LoginScreen = ({ navigation }: IProps) => {
                 emailOrPhone: data.email,
                 userId: data.id,
                 name: data.name,
+                isAdmin: data.isAdmin,
                 token: data.access_token,
                 partyId: data.partyId,
             });
-            navigation.replace("/");
+            navigation.replace(data.isAdmin ? "godown-report" : "rates");
         },
         onError: async () => await AsyncStorage.removeItem("access_token"),
     });

@@ -13,7 +13,7 @@ interface IProps {
 }
 
 const OrderDetails = ({ order, totalQty }: IProps) => {
-    const pendingQty = order.totalQty - totalQty;
+    const pendingQty = (order.totalQty - totalQty).toFixed(2); 
     const pendingQuantity = `${pendingQty} ${order.primaryUnit}`;
 
     return (
@@ -41,7 +41,7 @@ const OrderDetails = ({ order, totalQty }: IProps) => {
                     </View>
                 </View>
 
-                {pendingQty > 0 && (
+                {Number(pendingQty) > 0 && (
                     <View style={[styles.row, { marginTop: 30 }]}>
                         <Text style={[styles.pendingLabel, styles.cell]}>Pending Quantity</Text>
                         <Text style={[styles.pendingValue, styles.cell]}>{pendingQuantity}</Text>

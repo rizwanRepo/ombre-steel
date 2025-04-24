@@ -54,7 +54,7 @@ export class LoginService {
 
     resentOTP(payload: ForgotPasswordPayload) {
         return axios
-            .post(`${this.baseUrl}/forgot-password/resend-otp`, payload)
+            .post(`${this.baseUrl}/resend-otp`, payload)
             .then((response) => response.data);
     }
 }

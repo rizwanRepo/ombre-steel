@@ -31,9 +31,9 @@ const RateRow = ({ item }: IProps) => {
             <Text style={RowStyles.grade}>{item.grade?.toString()}</Text>
 
             <View style={RowStyles.rateContainer}>
-                <Text style={[RowStyles.price]}>{`₹ ${item.price}`}</Text>
+                <Text style={[RowStyles.price]}>{`₹ ${Number(item.price).toFixed(2)}`}</Text>
                 <Text style={{ color: amountColor, fontSize: 11, marginTop: 6 }}>
-                    {item.amount} ({item.percentage})
+                    {Number(item.amount).toFixed(2)} ({item.percentage})
                 </Text>
             </View>
 
