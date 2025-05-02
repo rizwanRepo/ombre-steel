@@ -23,17 +23,52 @@ export const PURCHASE_TAB_ITEMS = [
 
 // Mock data for Party Menu Items
 export const PARTY_MENU_ITEMS: MenuItem[] = [
-    { id: 'rates', label: 'Rates', route: 'rates' },
-    { id: 'inventory', label: 'My Inventory', route: '/' },
-    { id: 'sale-orders', label: "Sale Order", route: 'sale-orders' },
-    { id: 'purchase-orders', label: 'Purchase Order', route: 'purchase-orders' },
-    { id: 'logout', label: 'Logout', route: 'logout' },
+    {
+        id: 'rates',
+        label: 'Rates',
+        route: 'rates',
+        icon: 'attach-money' // Money/price related icon
+    },
+    {
+        id: 'inventory',
+        label: 'My Inventory',
+        route: '/',
+        icon: 'inventory' // Inventory/stock icon
+    },
+    {
+        id: 'sale-orders',
+        label: "Sale Order",
+        route: 'sale-orders',
+        icon: 'shopping-cart' // Shopping/sale related icon
+    },
+    {
+        id: 'purchase-orders',
+        label: 'Purchase Order',
+        route: 'purchase-orders',
+        icon: 'receipt' // Purchase/order related icon
+    },
+    {
+        id: 'logout',
+        label: 'Logout',
+        route: 'logout',
+        icon: 'logout' // Logout icon
+    },
 ];
 
 // Mock data for Admin Menu Items
 export const ADMIN_MENU_ITEMS: MenuItem[] = [
-    { id: 'godown-report', label: 'Godown Report', route: 'godown-report' },
-    { id: 'logout', label: 'Logout', route: 'logout' },
+    {
+        id: 'godown-report',
+        label: 'Godown Report',
+        route: 'godown-report',
+        icon: 'assessment' // Report/analytics icon
+    },
+    {
+        id: 'logout',
+        label: 'Logout',
+        route: 'logout',
+        icon: 'logout' // Logout icon
+    },
 ];
 
 // Mock data for Admin Menu Items

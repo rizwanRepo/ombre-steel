@@ -63,7 +63,9 @@ const styles = StyleSheet.create({
         textAlign: "right",
     },
     logo: {
-        marginBottom: 40,
+        width: '90%',
+        height: 100,
+        marginBottom: 40
     },
     inputWithIcon: {
         height: 50,

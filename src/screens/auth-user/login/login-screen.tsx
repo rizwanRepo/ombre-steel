@@ -49,6 +49,8 @@ const LoginScreen = ({ navigation }: IProps) => {
                 partyId: data.data.partyId,
                 isAdmin: data.data.isAdmin,
                 token: data.access_token,
+                organizationName: data.data.UserOrganizations[0]?.Organization?.name,
+                logoUrl: data.data.UserOrganizations[0]?.Organization?.logoUrl,
             });
             await AsyncStorage.setItem("access_token", data.access_token);
             if (!data.data.isPasswordChanged) {
@@ -72,6 +74,8 @@ const LoginScreen = ({ navigation }: IProps) => {
                 isAdmin: data.isAdmin,
                 token: data.access_token,
                 partyId: data.partyId,
+                organizationName: data.organizationName,
+                logoUrl: data.logoUrl,
             });
             navigation.replace(data.isAdmin ? "godown-report" : "rates");
         },
@@ -116,7 +120,7 @@ const LoginScreen = ({ navigation }: IProps) => {
                     <Image
                         alt="logo"
                         style={styles.logo}
-                        source={require("../../../assets/images/ombre-logo.png")}
+                        source={require("../../../assets/images/omni-logo.png")}
                     />
 
                     <Text style={styles.title}>Log in to your Account</Text>

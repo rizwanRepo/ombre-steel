@@ -8,6 +8,8 @@ interface User {
     name: string;
     partyId: number;
     isAdmin: boolean;
+    organizationName: string;
+    logoUrl: string;
     oldPassword?: string;
 }
 

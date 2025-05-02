@@ -1,81 +1,119 @@
-import { Platform, StyleSheet } from "react-native";
+import { Platform, StyleSheet } from 'react-native';
+
+const isIOS = Platform.OS === 'ios';
 
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: Platform.OS === 'ios' ? 50 : 10,
-        paddingVertical: 10,
-        paddingHorizontal: 10,
-
-        backgroundColor: "white",
+        marginBottom: isIOS ? 50 : 10,
+        padding: 10,
+        backgroundColor: '#fff',
         borderRadius: 40,
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOpacity: 0.1,
         shadowRadius: 5,
         elevation: 4,
     },
+    backButton: {
+        padding: 8,
+        borderRadius: 20,
+    },
     title: {
-        color: '#000',
+        flex: 1,
         fontSize: 18,
         fontWeight: 'bold',
-        // width: "60%",
-        textAlign: "justify"
+        marginLeft: 10,
     },
     menuButton: {
-        padding: 5,
-        borderRadius: 12,
-        backgroundColor: '#FFFFFF',
-        shadowColor: '#000',
-        // shadowOffset: { width: 0, height: 2 },
-        // shadowOpacity: 0.1,
-        // shadowRadius: 4,
-        // elevation: 2,
-    },
-    overlay: {
-        flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.1)',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-end',
+        padding: 8,
+        borderRadius: 20,
     },
     dropdownMenu: {
-        width: '50%',
         position: 'absolute',
-        top: Platform.OS === 'ios' ? 120 : 60,
-        right: 10,
-        backgroundColor: '#FFFFFF',
-        borderRadius: 10,
-        paddingVertical: 8,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        elevation: 5,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        width: 280,
+        backgroundColor: '#fff',
+        ...Platform.select({
+            ios: {
+                shadowColor: '#000',
+                shadowOffset: { width: -2, height: 0 },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+            },
+            android: {
+                elevation: 5,
+            },
+        }),
+    },
+    logoContainer: {
+        padding: 24,
+        backgroundColor: '#F8F9FA',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: '#E5E5E5',
+    },
+    logoImage: {
+        width: 120,
+        height: 60,
+        marginBottom: 12,
+    },
+    organizationName: {
+        fontSize: 18,
+        fontWeight: 600,
+        color: '#333',
+        textAlign: 'center',
+        marginTop: 8,
+        lineHeight: 30,
+        letterSpacing: 0.5,
+    },
+    menuList: {
+        flex: 1,
+        paddingTop: 8,
     },
     menuItem: {
-        paddingVertical: 12,
-        paddingHorizontal: 12,
-        borderBottomWidth: 1,
-        borderBottomColor: '#E0E0E0',
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 16,
+        marginHorizontal: 8,
+        borderRadius: 8,
     },
-    selectedMenuItem: {
-        backgroundColor: '#C9E9FF',
+    menuIcon: {
+        width: 24,
+        marginRight: 16,
+        textAlign: 'center',
     },
     menuItemText: {
         fontSize: 16,
-        color: '#000',
+        color: '#333',
+        letterSpacing: 0.3,
+    },
+    selectedMenuItem: {
+        backgroundColor: '#F0F8FF',
     },
     selectedMenuItemText: {
-        color: '#333',
-        fontWeight: "bold",
+        color: '#007AFF',
+        fontWeight: 600,
     },
-    backButton: {
-        // position: 'absolute',
-        // top: 10,
-        left: 0,
-        // padding: 10,
-        zIndex: 1,
+    logoutMenuItem: {
+        marginTop: 8,
+    },
+    logoutText: {
+        color: '#FF3B30',
+        fontWeight: 600,
+    },
+    logoutDivider: {
+        height: 1,
+        backgroundColor: '#E5E5E5',
+        marginTop: 8,
+        marginHorizontal: 16,
+    },
+    overlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
 });
 
